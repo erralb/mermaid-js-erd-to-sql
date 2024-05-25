@@ -1,6 +1,10 @@
 ```mermaid
+---
+title: eCommerce
+---
 erDiagram
-    Client {
+    Client 
+    {
         int clientId PK
         string nom
         string email
@@ -14,7 +18,7 @@ erDiagram
     }
 
     Produit {
-        int produitId PK
+        int produitId PK "L'identifiant du produit"
         string nomProduit
         string description
         double prix
@@ -70,10 +74,10 @@ erDiagram
     Client ||--o{ Commande : passe
     Commande ||--o{ DetailCommande : contient
     Produit ||--o{ DetailCommande : est_inclut_dans
-    Categorie ||--o{ Produit : categorise
+    Categorie }o--o{ Produit : categorise
     Fournisseur ||--o{ FournisseurProduit : fournit
     Produit ||--o{ FournisseurProduit : est_fourni
     Client ||--o{ Avis : ecrit
     Produit ||--o{ Avis : recoit
-    Employe ||--o{ Commande : gere
+    Employe }o--o{ Commande : gere
 ```

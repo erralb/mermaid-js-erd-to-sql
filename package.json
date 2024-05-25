@@ -3,6 +3,8 @@
   "displayName": "Mermaid JS ERD to SQL",
   "description": "Convert Mermaid ERD markup language to SQL DDL",
   "version": "0.0.1",
+  "publisher": "erralb",
+  "repository": "https://github.com/erralb/mermaid-js-erd-to-sql",
   "engines": {
     "vscode": "^1.89.0"
   },
@@ -20,6 +22,10 @@
       {
         "command": "mermaid-js-erd-to-sql.mermaidERDMySQL",
         "title": "Mermaid ERD to MySQL"
+      },
+      {
+        "command": "mermaid-js-erd-to-sql.mermaidERDPostgreSQL",
+        "title": "Mermaid ERD to PostgreSQL"
       }
     ]
   },
