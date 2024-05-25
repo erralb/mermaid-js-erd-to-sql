@@ -3,7 +3,6 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import { parseMermaidERD, convertToSQL } from './convert';
-import { loadavg } from 'os';
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -18,45 +17,38 @@ export function activate(context: vscode.ExtensionContext) {
 		const editor = vscode.window.activeTextEditor;
 
 		if (editor) {
-			// const document = editor.document;
-			const path = vscode.window.activeTextEditor?.document.uri.fsPath;
-			// console.log('path', path);
+			const path = vscode.window.activeTextEditor?.document.uri.fsPath; //get currently opened file path
+			const output = path?.substring(0, path.lastIndexOf('.')); //path for SQL output
 			
-			const markdownContent = fs.readFileSync(path, 'utf-8');
-			const { schema, entities, relationships } = parseMermaidERD(markdownContent);
-			const sqlScript = convertToSQL(schema, entities, relationships);
-			// console.log('sqlScript', sqlScript);
-			// vscode.workspace.openTextDocument(uri).then((document) => {
-			// 	let text = document.getText();
-			//   });
-			// fs.writeFileSync('output.sql', sqlScript);
-
-			// console.log('SQL script generated successfully!');
-
-
-			// 	const selection = editor.selection;
-
-			// 	// // Get the document text
-			// 	// const documentText = document.getText();
-
-			// 	// Get the word within the selection
-			// 	const word = document.getText(selection);
-			// 	const reversed = word.split('').reverse().join('');
-			// 	editor.edit(editBuilder => {
-			// 		editBuilder.replace(selection, reversed);
-			// 	});
+  			// @ts-ignore
+			const markdownContent = fs.readFileSync(path, 'utf-8'); //get Mermaid JS Markdown content form currently opened file
+			const { schema, entities, relationships } = parseMermaidERD(markdownContent); //Parse Mardown and create Entity and Relationship objects
+			const sqlScript = convertToSQL(schema, entities, relationships); //generate SQL
+			fs.writeFileSync(output + '.sql', sqlScript); //write SQL file in currently opened file folder
+			vscode.workspace.openTextDocument(output + '.sql');
+			vscode.window.showInformationMessage('SQL script generated successfully!');
 		}
 	});
 
 	context.subscriptions.push(disposable);
 
+	/**
+	 * @todo
+	 */
 	let disposable2 = vscode.commands.registerCommand('mermaid-js-erd-to-sql.mermaidERDMySQL', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Mermaid JS ERD to MySQL!');
+		vscode.window.showInformationMessage('Mermaid JS ERD to MySQL not implemented yet');
 	});
 
 	context.subscriptions.push(disposable2);
+
+	/**
+	 * @todo
+	 */
+	let disposable3 = vscode.commands.registerCommand('mermaid-js-erd-to-sql.mermaidERDPostgreSQL', () => {
+		vscode.window.showInformationMessage('Mermaid JS ERD to PostgreSQL not implemented yet');
+	});
+
+	context.subscriptions.push(disposable3);
 }
 
 // This method is called when your extension is deactivated

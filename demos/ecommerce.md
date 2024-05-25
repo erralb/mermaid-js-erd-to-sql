@@ -3,8 +3,7 @@
 title: eCommerce
 ---
 erDiagram
-    Client 
-    {
+    Client {
         int clientId PK
         string nom
         string email
@@ -72,6 +71,7 @@ erDiagram
     }
 
     Client ||--o{ Commande : passe
+    %% Commande }o--|| Client  : passe
     Commande ||--o{ DetailCommande : contient
     Produit ||--o{ DetailCommande : est_inclut_dans
     Categorie }o--o{ Produit : categorise
