@@ -11,20 +11,6 @@ erDiagram
         string telephone
     }
 
-    Categorie {
-        int categorieId PK
-        string nomCategorie
-    }
-
-    Produit {
-        int produitId PK "L'identifiant du produit"
-        string nomProduit
-        string description
-        double prix
-        int stock
-        int categorieId FK
-    }
-
     Commande {
         int commandeId PK
         int clientId FK
@@ -40,6 +26,28 @@ erDiagram
         double prixUnitaire
     }
 
+    Produit {
+        int produitId PK "L'identifiant du produit"
+        string nomProduit
+        string description
+        double prix
+        int stock
+        int categorieId FK
+    }
+
+    Categorie {
+        int categorieId PK
+        string nomCategorie
+    }
+
+    Avis {
+        int avisId PK
+        int clientId FK
+        int produitId FK
+        int note
+        string commentaire
+    }
+
     Fournisseur {
         int fournisseurId PK
         string nomFournisseur
@@ -50,7 +58,8 @@ erDiagram
 
     FournisseurProduit {
         int fournisseurId PK
-        int produitId PK
+        int produitId PK 
+        double prixUnitaire
     }
 
     Employe {
@@ -62,16 +71,7 @@ erDiagram
         date dateEmbauche
     }
 
-    Avis {
-        int avisId PK
-        int clientId FK
-        int produitId FK
-        int note
-        string commentaire
-    }
-
     Client ||--o{ Commande : passe
-    %% Commande }o--|| Client  : passe
     Commande ||--o{ DetailCommande : contient
     Produit ||--o{ DetailCommande : est_inclut_dans
     Categorie }o--o{ Produit : categorise
