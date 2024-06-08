@@ -2,6 +2,7 @@
   "name": "mermaid-js-erd-to-sql",
   "displayName": "Mermaid JS ERD to SQL",
   "description": "Convert Mermaid ERD markup language to SQL DDL",
+  "icon": "icon.png",
   "version": "1.0.0",
   "publisher": "erralb",
   "repository": "https://github.com/erralb/mermaid-js-erd-to-sql",
