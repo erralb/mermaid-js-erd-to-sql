@@ -1,112 +1,100 @@
-CREATE TABLE Client (
-    clientId INT PRIMARY KEY,
-    nom VARCHAR,
-    email VARCHAR,
-    adresse VARCHAR,
-    telephone VARCHAR
+-- SQL script generated from Mermaid JS ERD to SQL
+-- Schema: eCommerce
+
+CREATE TABLE Customer (
+    customerId INT,
+    name VARCHAR(255),
+    email VARCHAR(255),
+    address VARCHAR(255),
+    phone VARCHAR(255),
+    PRIMARY KEY (customerId)
 );
 
-CREATE TABLE Commande (
-    commandeId INT PRIMARY KEY,
-    clientId INT FOREIGN KEY,
-    dateCommande DATE,
-    statut VARCHAR
+CREATE TABLE Order (
+    orderId INT,
+    orderDate DATE,
+    status VARCHAR(255),
+    customerId INT,
+    PRIMARY KEY (orderId),
+    FOREIGN KEY(customerId) REFERENCES Customer(customerId)
 );
 
-CREATE TABLE DetailCommande (
-    detailId INT PRIMARY KEY,
-    commandeId INT FOREIGN KEY,
-    produitId INT FOREIGN KEY,
-    quantite INT,
-    prixUnitaire double
-);
-
-CREATE TABLE Produit (
-    produitId INT PRIMARY KEY,
-    nomProduit VARCHAR,
-    description VARCHAR,
-    prix double,
+CREATE TABLE Product (
+    productId INT,
+    productName VARCHAR(255),
+    description VARCHAR(255),
+    price double,
     stock INT,
-    categorieId INT FOREIGN KEY
+    PRIMARY KEY (productId)
 );
 
-CREATE TABLE Categorie (
-    categorieId INT PRIMARY KEY,
-    nomCategorie VARCHAR
+CREATE TABLE OrderDetail (
+    orderDetailId INT,
+    orderId INT,
+    productId INT,
+    quantity INT,
+    unitPrice double,
+    PRIMARY KEY (orderDetailId),
+    FOREIGN KEY(orderId) REFERENCES Order(orderId),
+    FOREIGN KEY(productId) REFERENCES Product(productId)
 );
 
-CREATE TABLE Avis (
-    avisId INT PRIMARY KEY,
-    clientId INT FOREIGN KEY,
-    produitId INT FOREIGN KEY,
-    note INT,
-    commentaire VARCHAR
+CREATE TABLE Category (
+    categoryId INT,
+    categoryName VARCHAR(255),
+    PRIMARY KEY (categoryId)
 );
 
-CREATE TABLE Fournisseur (
-    fournisseurId INT PRIMARY KEY,
-    nomFournisseur VARCHAR,
-    contact VARCHAR,
-    telephone VARCHAR,
-    adresse VARCHAR
+CREATE TABLE Review (
+    reviewId INT,
+    customerId INT,
+    productId INT,
+    rating INT,
+    comment VARCHAR(255),
+    PRIMARY KEY (reviewId),
+    FOREIGN KEY(customerId) REFERENCES Customer(customerId),
+    FOREIGN KEY(productId) REFERENCES Product(productId)
 );
 
-CREATE TABLE FournisseurProduit (
-    fournisseurId INT PRIMARY KEY,
-    produitId INT PRIMARY KEY,
-    prixUnitaire double
+CREATE TABLE Supplier (
+    supplierId INT,
+    supplierName VARCHAR(255),
+    contact VARCHAR(255),
+    phone VARCHAR(255),
+    address VARCHAR(255),
+    PRIMARY KEY (supplierId)
 );
 
-CREATE TABLE Employe (
-    employeId INT PRIMARY KEY,
-    nom VARCHAR,
-    prenom VARCHAR,
-    email VARCHAR,
-    poste VARCHAR,
-    dateEmbauche DATE
+CREATE TABLE SupplierProduct (
+    supplierId INT,
+    productId INT,
+    unitPrice double,
+    PRIMARY KEY (supplierId,productId)
 );
 
-ALTER TABLE Commande
-    ADD CONSTRAINT FK_Client_Commande
-    FOREIGN KEY (clientId) REFERENCES Client(clientId);
-
-ALTER TABLE DetailCommande
-    ADD CONSTRAINT FK_Commande_DetailCommande
-    FOREIGN KEY (commandeId) REFERENCES Commande(commandeId);
-
-ALTER TABLE DetailCommande
-    ADD CONSTRAINT FK_Produit_DetailCommande
-    FOREIGN KEY (produitId) REFERENCES Produit(produitId);
-
-CREATE TABLE Categorie_Produit (
-    categorieId INT,
-    produitId INT,
-    PRIMARY KEY (categorieId, produitId),
-    FOREIGN KEY (categorieId) REFERENCES Categorie(categorieId),
-    FOREIGN KEY (produitId) REFERENCES Produit(produitId)
+CREATE TABLE Employee (
+    employeeId INT,
+    name VARCHAR(255),
+    surname VARCHAR(255),
+    email VARCHAR(255),
+    position VARCHAR(255),
+    hireDate DATE,
+    PRIMARY KEY (employeeId)
 );
 
-ALTER TABLE FournisseurProduit
-    ADD CONSTRAINT FK_Fournisseur_FournisseurProduit
-    FOREIGN KEY (fournisseurId) REFERENCES Fournisseur(fournisseurId);
+CREATE TABLE Category_Product_categorizes (
+    categoryId INT,
+    productId INT,
+    PRIMARY KEY (categoryId,productId),
+    FOREIGN KEY(categoryId) REFERENCES Category(categoryId),
+    FOREIGN KEY(productId) REFERENCES Product(productId)
+);
 
-ALTER TABLE FournisseurProduit
-    ADD CONSTRAINT FK_Produit_FournisseurProduit
-    FOREIGN KEY (produitId) REFERENCES Produit(produitId);
-
-ALTER TABLE Avis
-    ADD CONSTRAINT FK_Client_Avis
-    FOREIGN KEY (clientId) REFERENCES Client(clientId);
-
-ALTER TABLE Avis
-    ADD CONSTRAINT FK_Produit_Avis
-    FOREIGN KEY (produitId) REFERENCES Produit(produitId);
-
-CREATE TABLE Employe_Commande (
-    employeId INT,
-    commandeId INT,
-    PRIMARY KEY (employeId, commandeId),
-    FOREIGN KEY (employeId) REFERENCES Employe(employeId),
-    FOREIGN KEY (commandeId) REFERENCES Commande(commandeId)
+CREATE TABLE Employee_Order_manages (
+    employeeId INT,
+    orderId INT,
+    PRIMARY KEY (employeeId,orderId),
+    FOREIGN KEY(employeeId) REFERENCES Employee(employeeId),
+    FOREIGN KEY(orderId) REFERENCES Order(orderId)
 );
 

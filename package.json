@@ -17,7 +17,7 @@
     "commands": [
       {
         "command": "mermaid-js-erd-to-sql.mermaidERDSQL",
-        "title": "Mermaid ERD to Generic SQL"
+        "title": "Mermaid ERD to SQL"
       },
       {
         "command": "mermaid-js-erd-to-sql.mermaidERDMySQL",
@@ -26,6 +26,10 @@
       {
         "command": "mermaid-js-erd-to-sql.mermaidERDPostgreSQL",
         "title": "Mermaid ERD to PostgreSQL"
+      },
+      {
+        "command": "mermaid-js-erd-to-sql.mermaidERDSQLite",
+        "title": "Mermaid ERD to SQLite"
       }
     ]
   },

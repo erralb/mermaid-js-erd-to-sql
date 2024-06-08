@@ -8,33 +8,45 @@ export function activate(context: vscode.ExtensionContext) {
 
 	console.log('Extension "mermaid-js-erd-to-sql" is active');
 
-	//Convert Mermaid JS ERD to Generic SQL
+	//Convert Mermaid JS ERD to SQL
 	let disposable = vscode.commands.registerCommand('mermaid-js-erd-to-sql.mermaidERDSQL', () => {
 		const { outputFilename, markdownContent } = getMermaidFileContent(); //get Mermaid JS Markdown content form currently opened file
 		if(outputFilename === '' || markdownContent === '') {return;}
 		const { schema, entities, relationships } = convert.parseMermaidERD(markdownContent); //Parse Mardown and create Entity and Relationship objects
-		const sqlScript = convert.toSQL(schema, entities, relationships); //generate SQL
+		const sqlScript = convert.MermaidERDSQL.toSQL(schema, entities, relationships); //generate SQL
 		writeGeneratedFile(outputFilename, sqlScript);
 	});
 	context.subscriptions.push(disposable);
 
 	//Convert Mermaid JS ERD to MySQL SQL
 	let disposable2 = vscode.commands.registerCommand('mermaid-js-erd-to-sql.mermaidERDMySQL', () => {
-		const { outputFilename, markdownContent } = getMermaidFileContent('-mysql.sql'); //get Mermaid JS Markdown content form currently opened file
+		const { outputFilename, markdownContent } = getMermaidFileContent('-mysql.sql');
 		if(outputFilename === '' || markdownContent === '') {return;}
-		const { schema, entities, relationships } = convert.parseMermaidERD(markdownContent); //Parse Mardown and create Entity and Relationship objects
-		const sqlScript = convert.toMySQL(schema, entities, relationships); //generate SQL
+		const { schema, entities, relationships } = convert.parseMermaidERD(markdownContent);
+		const sqlScript = convert.MermaidERDMySQL.toSQL(schema, entities, relationships);
 		writeGeneratedFile(outputFilename, sqlScript);
 	});
 	context.subscriptions.push(disposable2);
 
-	/**
-	 * @todo Implement PostgreSQL SQL generation
-	 */
+	//Convert Mermaid JS ERD to Postgres SQL
 	let disposable3 = vscode.commands.registerCommand('mermaid-js-erd-to-sql.mermaidERDPostgreSQL', () => {
-		vscode.window.showInformationMessage('Mermaid JS ERD to PostgreSQL not implemented yet');
+		const { outputFilename, markdownContent } = getMermaidFileContent('-postgres.sql');
+		if(outputFilename === '' || markdownContent === '') {return;}
+		const { schema, entities, relationships } = convert.parseMermaidERD(markdownContent);
+		const sqlScript = convert.MermaidERDPostgreSQL.toSQL(schema, entities, relationships);
+		writeGeneratedFile(outputFilename, sqlScript);
 	});
 	context.subscriptions.push(disposable3);
+
+	//Convert Mermaid JS ERD to SQLite SQL
+	let disposable4 = vscode.commands.registerCommand('mermaid-js-erd-to-sql.mermaidERDSQLite', () => {
+		const { outputFilename, markdownContent } = getMermaidFileContent('-sqlite.sql');
+		if(outputFilename === '' || markdownContent === '') {return;}
+		const { schema, entities, relationships } = convert.parseMermaidERD(markdownContent);
+		const sqlScript = convert.MermaidERDSQLite.toSQL(schema, entities, relationships);
+		writeGeneratedFile(outputFilename, sqlScript);
+	});
+	context.subscriptions.push(disposable4);
 
 	/**
 	 * @todo Implement Oracle SQL generation
@@ -58,8 +70,6 @@ function getMermaidFileContent(extension: string = '.sql'): { outputFilename: st
 			vscode.window.showErrorMessage(error_message);
 			return { outputFilename: '', markdownContent: '' };
 		}
-		// let date = new Date();
-		// let dateTime = `-${date.getFullYear()}-${date.getMonth()}-${date.getDay()}-${date.getHours()}-${date.getMinutes()}-${date.getSeconds()}`;
 		let dateTime = '';
 		const outputFilename = path?.substring(0, path.lastIndexOf('.')) + dateTime + extension; //path for SQL output
 		const markdownContent = path?fs.readFileSync(path, 'utf-8'):''; //get Mermaid JS Markdown content form currently opened file
