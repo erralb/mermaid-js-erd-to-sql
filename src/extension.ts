@@ -55,6 +55,10 @@ export function activate(context: vscode.ExtensionContext) {
 	/**
 	 * @todo Implement SQL Server SQL generation
 	 */
+
+	/**
+	 * @todo Implement SQL MSAccess SQL generation
+	 */
 }
 
 // This method is called when your extension is deactivated

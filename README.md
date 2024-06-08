@@ -1,71 +1,51 @@
-# mermaid-js-erd-to-sql README
+# Mermaid JS ER Diagram to SQL converter
 
-This is the README for your extension "mermaid-js-erd-to-sql". After writing up a brief description, we recommend including the following sections.
+[Mermaid](https://mermaid.js.org/) is Javascript diagramming and charting tool.
 
-## Features
+This VSCode extension converts [MermaidJS Entity Relationship markdown ](https://mermaid.js.org/syntax/entityRelationshipDiagram.html) to SQL.
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
-
-For example if there is an image subfolder under your extension project workspace:
-
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
-
-## Requirements
-
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
-
-## Extension Settings
-
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
+.md, .mermaid and .mmd files are currently supported.
 
 ---
 
-## Following extension guidelines
+## Features
 
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
+![Usage](demos/mermaidERDToSQL.gif)
 
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
+> Open a valid Mermaid ER diagram file, search the command palette for "Mermaid ERD to SQL". 
+The generated file will be in the same folder as the converted file.
 
-## Working with Markdown
+If the basic SQL does not work with your DBMS, you can try the specific Postgres, MySQL or SQLite commands.
 
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
+---
 
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
+## Release Notes
 
-## For more information
+The Mermaid markdown for ER diagrams is limited. This extension aims to be a starting point to generate your SQL from what is doable with Mermaid code.
 
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
+The extension is working for the tests cases in the [demos folder](https://github.com/erralb/mermaid-js-erd-to-sql/tree/master/demos) for MySQL, SQLite and Postgres.
 
-**Enjoy!**
+More DBMS support and documentation to come in future releases.
+
+### 1.0.0
+
+Initial release
+
+---
+
+## Issues & Suggestions
+
+Please feel free to open issues and suggest features or pull requests on [Github](https://github.com/erralb/mermaid-js-erd-to-sql)
+
+---
+
+## Recommended extensions
+
+To edit and preview Mermaid mardown files, I personnaly use these extensions :
+
+- [Markdown Preview Enhanced](https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced) or [Markdown Preview Mermaid Support](https://marketplace.visualstudio.com/items?itemName=bierner.markdown-mermaid)
+- [Mermaid syntax highlighting](https://marketplace.visualstudio.com/items?itemName=bpruitt-goddard.mermaid-markdown-syntax-highlighting)
+
+---
+
+## Enjoy!
