@@ -11,7 +11,7 @@ erDiagram
         string phone
     }
 
-    Order {
+    Orders {
         int orderId PK
         date orderDate
         string status
@@ -69,14 +69,14 @@ erDiagram
         date hireDate
     }
 
-    Customer ||--o{ Order : places
-    Order ||--o{ OrderDetail : contains
+    Customer ||--o{ Orders : places
+    Orders ||--o{ OrderDetail : contains
     Product ||--o{ OrderDetail : is_included_in
     Category }o--o{ Product : categorizes
     Supplier ||--o{ SupplierProduct : supplies
     Product ||--o{ SupplierProduct : is_supplied
     Customer ||--o{ Review : writes
     Product ||--o{ Review : receives
-    Employee }o--o{ Order : manages
+    Employee }o--o{ Orders : manages
 
 ```

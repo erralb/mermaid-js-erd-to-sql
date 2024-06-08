@@ -10,7 +10,7 @@ CREATE TABLE Customer (
     PRIMARY KEY (customerId)
 );
 
-CREATE TABLE Order (
+CREATE TABLE Orders (
     orderId INT,
     orderDate DATE,
     status VARCHAR(255),
@@ -35,7 +35,7 @@ CREATE TABLE OrderDetail (
     quantity INT,
     unitPrice double,
     PRIMARY KEY (orderDetailId),
-    FOREIGN KEY(orderId) REFERENCES Order(orderId),
+    FOREIGN KEY(orderId) REFERENCES Orders(orderId),
     FOREIGN KEY(productId) REFERENCES Product(productId)
 );
 
@@ -90,11 +90,11 @@ CREATE TABLE Category_Product_categorizes (
     FOREIGN KEY(productId) REFERENCES Product(productId)
 );
 
-CREATE TABLE Employee_Order_manages (
+CREATE TABLE Employee_Orders_manages (
     employeeId INT,
     orderId INT,
     PRIMARY KEY (employeeId,orderId),
     FOREIGN KEY(employeeId) REFERENCES Employee(employeeId),
-    FOREIGN KEY(orderId) REFERENCES Order(orderId)
+    FOREIGN KEY(orderId) REFERENCES Orders(orderId)
 );
 

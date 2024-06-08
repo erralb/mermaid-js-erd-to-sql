@@ -23,7 +23,7 @@ const parseMermaidERD = (content: string): { schema: string, entities: Entity[];
         if (line.startsWith('title')) { //Schema name
             schema = line.split(':')[1].trim();
         }
-        else if(line.includes('erDiagram')) {
+        else if (line.includes('erDiagram')) {
             MermaidERD = true;
         }
         else if (line.includes(':') && !line.startsWith('title')) { //Relationship extraction
@@ -54,12 +54,12 @@ const parseMermaidERD = (content: string): { schema: string, entities: Entity[];
             const fk = line.includes('FK');
             let comment = '';
             if (line.includes('"')) { comment = parts[parts.length - 1]; }
-            currentEntity.attributes.push({ name: attributeName, type: attributeType, pk, fk, comment, references: emptyEntity(), referencePk: fk, nn: pk});
+            currentEntity.attributes.push({ name: attributeName, type: attributeType, pk, fk, comment, references: emptyEntity(), referencePk: fk, nn: pk });
         }
         if (!line || /^\s*$/.test(line)) { previousLine = line; } //assign previous line only if it's not empty
     };
 
-    if(!MermaidERD) {
+    if (!MermaidERD) {
         throw new Error('This file does not appear to be a valid Mermaid JS ERD file');
     }
 
@@ -67,55 +67,60 @@ const parseMermaidERD = (content: string): { schema: string, entities: Entity[];
     relationships.forEach(rel => {
         const entity1 = entities.find(e => e.name === rel.entity1);
         const entity2 = entities.find(e => e.name === rel.entity2);
-        if (entity1 !== undefined && entity2 !== undefined) {
-            switch (rel.cardinality) {
-                case '|o--||':
-                case '||--o{':
-                    oneToManyRelationshipSQL(entity1, entity2, false);
-                    break;
-                case '||--||':
-                case '||--|{':
-                    oneToManyRelationshipSQL(entity1, entity2);
-                    break;
-                //reversed case for reversed cardinality
-                case '||--o|':
-                case '}o--||':
-                    oneToManyRelationshipSQL(entity2, entity1, false);
-                    break;
-                case '||--||':
-                case '}|--||':
-                    oneToManyRelationshipSQL(entity2, entity1);
-                    break;
-                case '}|--o{':
-                case '}o--|{':
-                case '}|--|{':
-                case '}o--o{':
+        //if entity1 is undefined, throw error
+        if (entity1 === undefined) {
+            throw new Error('Entity ' + rel.entity1 + ' not found in relationship ' + rel.name + ' between ' + rel.entity1 + ' and ' + rel.entity2);
+        }
+        //if entity2 is undefined, throw error
+        if (entity2 === undefined) {
+            throw new Error('Entity ' + rel.entity2 + ' not found in relationship ' + rel.name + ' between ' + rel.entity1 + ' and ' + rel.entity2);
+        }
+        switch (rel.cardinality) {
+            case '|o--||':
+            case '||--o{':
+                oneToManyRelationshipSQL(entity1, entity2, false);
+                break;
+            case '||--||':
+            case '||--|{':
+                oneToManyRelationshipSQL(entity1, entity2);
+                break;
+            //reversed case for reversed cardinality
+            case '||--o|':
+            case '}o--||':
+                oneToManyRelationshipSQL(entity2, entity1, false);
+                break;
+            case '||--||':
+            case '}|--||':
+                oneToManyRelationshipSQL(entity2, entity1);
+                break;
+            case '}|--o{':
+            case '}o--|{':
+            case '}|--|{':
+            case '}o--o{':
 
-                    //create entity for join table
-                    const entity: Entity = {
-                        name: entity1.name + '_' + entity2.name + '_' + rel.name,
-                        attributes: [],
-                        pkCount: 0
-                    };
+                //create entity for join table
+                const entity: Entity = {
+                    name: entity1.name + '_' + entity2.name + '_' + rel.name,
+                    attributes: [],
+                    pkCount: 0
+                };
 
-                    //get pks from entity1 and entity2
-                    const pk1 = entity1.attributes.filter(a => a.pk);
-                    const pk2 = entity2.attributes.filter(a => a.pk);
-                    //add pks to join entity
-                    pk1.forEach(pk => {
-                        entity.attributes.push({ name: pk.name, type: pk.type, pk: true, fk: true, references: entity1, referencePk: true, comment: '', nn: true });
-                        entity.pkCount++;
-                    });
-                    pk2.forEach(pk => {
-                        entity.attributes.push({ name: pk.name, type: pk.type, pk: true, fk: true, references: entity2, referencePk: true, comment: '', nn: true });
-                        entity.pkCount++;
-                    });
+                //get pks from entity1 and entity2
+                const pk1 = entity1.attributes.filter(a => a.pk);
+                const pk2 = entity2.attributes.filter(a => a.pk);
+                //add pks to join entity
+                pk1.forEach(pk => {
+                    entity.attributes.push({ name: pk.name, type: pk.type, pk: true, fk: true, references: entity1, referencePk: true, comment: '', nn: true });
+                    entity.pkCount++;
+                });
+                pk2.forEach(pk => {
+                    entity.attributes.push({ name: pk.name, type: pk.type, pk: true, fk: true, references: entity2, referencePk: true, comment: '', nn: true });
+                    entity.pkCount++;
+                });
 
-                    entities.push(entity);
+                entities.push(entity);
 
-                    break;
-            }
-
+                break;
         }
     });
 
