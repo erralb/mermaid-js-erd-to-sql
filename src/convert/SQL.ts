@@ -1,8 +1,14 @@
 import { Entity } from '../types/Entity';
 import { Relationship } from '../types/Relationship';
 
+/**
+ * Converts Entities Js objects into SQL
+ */
 class MermaidERDSQL {
 
+    /**
+     * Data types conversion from Mermaid to SQL
+     */
     protected static dataTypes: { [key: string]: string } = {
         'string': 'VARCHAR(255)',
         'int': 'INT',
@@ -13,6 +19,13 @@ class MermaidERDSQL {
         'bool': 'BOOLEAN'
     };
 
+    /**
+     * Generates SQL code from Entity objects
+     * @param schema
+     * @param entities 
+     * @param relationships 
+     * @returns 
+     */
     public static toSQL(schema: string, entities: Entity[], relationships: Relationship[]): string {
         let sql = '';
         sql += `-- SQL script generated from Mermaid JS ERD to SQL\n`;
@@ -21,6 +34,11 @@ class MermaidERDSQL {
         return sql;
     }
 
+    /**
+     * Generates SQL code for an entity
+     * @param entity 
+     * @returns string containing SQL code
+     */
     protected static entitySQL(entity: Entity) {
         let sql = '';
         let pks = '    PRIMARY KEY (';
@@ -46,6 +64,9 @@ class MermaidERDSQL {
         return sql;
     }
 
+    /**
+     * Data types conversion from Mermaid to SQL
+     */
     protected static convertMermaidDataTypeToSQL(dataType: string) {
         if (!this.dataTypes[dataType]) { return dataType; }
         return this.dataTypes[dataType];

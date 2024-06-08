@@ -1,7 +1,11 @@
 import { Entity, emptyEntity } from '../types/Entity';
 import { Relationship } from '../types/Relationship';
 
-
+/**
+ * Converts Mermaid markdown to Js objects
+ * @param content Mermaid markdown content
+ * @returns An object containing the schema name, the entities and the relationships
+ */
 const parseMermaidERD = (content: string): { schema: string, entities: Entity[]; relationships: Relationship[] } => {
 
     const lines = content.split('\n').map(line => line.trim()).filter(line => line);
@@ -118,6 +122,12 @@ const parseMermaidERD = (content: string): { schema: string, entities: Entity[];
     return { schema, entities, relationships };
 };
 
+/**
+ * Manages the creation of a one-to-many relationship between two entities
+ * @param entity1 
+ * @param entity2 
+ * @param mandatory oneToMany or zeroToMany ? 
+ */
 function oneToManyRelationshipSQL(entity1: Entity, entity2: Entity, mandatory: boolean = true) {
     // find all primary keys in entity1
     const pk1 = entity1.attributes.filter(a => a.pk);

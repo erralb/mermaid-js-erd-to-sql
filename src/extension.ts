@@ -64,6 +64,11 @@ export function activate(context: vscode.ExtensionContext) {
 // This method is called when your extension is deactivated
 export function deactivate() { }
 
+/**
+ * Get Mermaid JS ERD Markdown content from currently opened file
+ * @param extension file extension for the output file
+ * @returns 
+ */
 function getMermaidFileContent(extension: string = '.sql'): { outputFilename: string, markdownContent: string } {
 	const editor = vscode.window.activeTextEditor;
 	const error_message = 'You must open a valid Mermaid JS ERD markdown file to convert it to SQL (.md, .mmd or .mermaid file extension)';
@@ -83,6 +88,11 @@ function getMermaidFileContent(extension: string = '.sql'): { outputFilename: st
 	return { outputFilename: '', markdownContent: '' };
 }
 
+/**
+ * Write the SQL script to a file
+ * @param outputFilename 
+ * @param content 
+ */
 function writeGeneratedFile(outputFilename: string, content: string) {
 	fs.writeFileSync(outputFilename, content); //write SQL file in currently opened file folder
 	vscode.workspace.openTextDocument(outputFilename);
