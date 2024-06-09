@@ -19,17 +19,15 @@ If the basic SQL does not work with your DBMS, you can try the specific Postgres
 
 ---
 
+## Documentation
+
+See the [Wiki on Github](https://github.com/erralb/mermaid-js-erd-to-sql/wiki) 
+
+---
+
 ## Release Notes
 
-The Mermaid markdown for ER diagrams is limited. This extension aims to be a starting point to generate your SQL from what is doable with Mermaid code.
-
-The extension is working for the tests cases in the [demos folder](https://github.com/erralb/mermaid-js-erd-to-sql/tree/master/demos) for MySQL, SQLite and Postgres.
-
-More DBMS support and documentation to come in future releases.
-
-### 1.0.0
-
-Initial release
+See the [Change log](CHANGELOG.md) 
 
 ---
 

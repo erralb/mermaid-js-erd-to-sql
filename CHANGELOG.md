@@ -7,7 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- Initial release
+## [1.0.3] - 2024-06-09
+
+### Added
+
+- Links to the Changelog and Wiki
 
 ## [1.0.2] - 2024-06-09
 
@@ -20,3 +24,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Basic support for relationships only diagrams
+
+## [1.0.0] - 2024-06-08
+
+### Added
+
+- Initial release
