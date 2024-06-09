@@ -32,11 +32,23 @@ const parseMermaidERD = (content: string): { schema: string, entities: Entity[];
             const entity2 = parts[2].trim();
             const name = parts[parts.length - 1];
             relationships.push({ entity1, entity2, cardinality, name });
+            const existingEntity1 = entities.find(e => e.name === entity1);
+            const existingEntity2 = entities.find(e => e.name === entity2);
+            if (existingEntity1 === undefined) {
+                let entity: Entity = { name: entity1, attributes: [], pkCount: 0 };
+                entities.push(entity);
+            }
+            if (existingEntity2 === undefined) {
+                let entity: Entity = { name: entity2, attributes: [], pkCount: 0 };
+                entities.push(entity);
+            }
         }
         else if (line.endsWith('{')) { //Entity extraction
             let entityName = line.split('{')[0].trim();
             if (entityName === '') { entityName = previousLine.trim(); }
-            currentEntity = { name: entityName, attributes: [], pkCount };
+            const existingEntity = entities.find(e => e.name === entityName);
+            if (existingEntity === undefined) { currentEntity = { name: entityName, attributes: [], pkCount }; }
+            else { currentEntity = existingEntity; }
         }
         else if (line.includes('}')) { //End of entity
             if (currentEntity) {
