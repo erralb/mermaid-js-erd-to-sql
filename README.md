@@ -10,6 +10,11 @@ This VSCode extension converts [MermaidJS Entity Relationship markdown ](https:/
 
 ## Features
 
+- Generate SQL code for MySQL, SQLite and Postgres (might work with other DBMS as well) from Mermaid markdown
+- Composite primary and foreign key support
+- Automatic Foreign key generation from relationships definition, without the need to define FK in ER diagram
+- Most data types supported (SET and ENUM are not accepted by Mermaid)
+
 ![Usage](demos/mermaidERDToSQL.gif)
 
 > Open a valid Mermaid ER diagram file, search the command palette for "Mermaid ERD to SQL". 
