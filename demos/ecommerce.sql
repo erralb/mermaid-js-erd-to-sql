@@ -69,7 +69,9 @@ CREATE TABLE SupplierProduct (
     supplierId INT,
     productId INT,
     unitPrice double,
-    PRIMARY KEY (supplierId,productId)
+    PRIMARY KEY (supplierId,productId),
+    FOREIGN KEY(supplierId) REFERENCES Supplier(supplierId),
+    FOREIGN KEY(productId) REFERENCES Product(productId)
 );
 
 CREATE TABLE Employee (

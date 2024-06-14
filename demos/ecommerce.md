@@ -55,8 +55,8 @@ erDiagram
     }
 
     SupplierProduct {
-        int supplierId PK
-        int productId PK
+        int supplierId PK, FK
+        int productId PK, FK
         double unitPrice
     }
 
