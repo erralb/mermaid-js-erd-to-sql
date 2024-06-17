@@ -48,6 +48,15 @@ export function activate(context: vscode.ExtensionContext) {
 	});
 	context.subscriptions.push(disposable4);
 
+	//Convert Mermaid JS ERD to SQLite SQL
+	let disposable5 = vscode.commands.registerCommand('mermaid-js-erd-to-sql.SQLToMermaid', () => {
+		const { outputFilename, sqlContent } = getSQLFileContent();
+		if(outputFilename === '' || sqlContent === '') {return;}
+		const mermaidJs = convert.parseSQL(sqlContent);
+		writeGeneratedFile(outputFilename, mermaidJs);
+	});
+	context.subscriptions.push(disposable5);
+
 	/**
 	 * @todo Implement Oracle SQL generation
 	 */
@@ -89,6 +98,30 @@ function getMermaidFileContent(extension: string = '.sql'): { outputFilename: st
 }
 
 /**
+ * Get SQL content from currently opened file
+ * @param extension file extension for the output file
+ * @returns 
+ */
+function getSQLFileContent(extension: string = '.mmd'): { outputFilename: string, sqlContent: string } {
+	const editor = vscode.window.activeTextEditor;
+	const error_message = 'You must open a valid SQL file to convert it to MermaidJS ERD markdown  (.sql file extension)';
+	if (editor) {
+		const path = vscode.window.activeTextEditor?.document.uri.fsPath; //get currently opened file path
+		const fileExt = path?.split('.').pop();
+		if (fileExt !== 'sql') {
+			vscode.window.showErrorMessage(error_message);
+			return { outputFilename: '', sqlContent: '' };
+		}
+		let dateTime = '';
+		const outputFilename = path?.substring(0, path.lastIndexOf('.')) + dateTime + extension; //path for MermaidJS output
+		const sqlContent = path?fs.readFileSync(path, 'utf-8'):''; //get SQL content form currently opened file
+		return { outputFilename, sqlContent };
+	}
+	vscode.window.showErrorMessage(error_message);
+	return { outputFilename: '', sqlContent: '' };
+}
+
+/**
  * Write the SQL script to a file
  * @param outputFilename 
  * @param content 
@@ -96,5 +129,5 @@ function getMermaidFileContent(extension: string = '.sql'): { outputFilename: st
 function writeGeneratedFile(outputFilename: string, content: string) {
 	fs.writeFileSync(outputFilename, content); //write SQL file in currently opened file folder
 	vscode.workspace.openTextDocument(outputFilename);
-	vscode.window.showInformationMessage('SQL script generated successfully!');
+	vscode.window.showInformationMessage('Script generated successfully!');
 }

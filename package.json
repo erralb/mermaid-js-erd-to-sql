@@ -3,7 +3,7 @@
   "displayName": "Mermaid JS ERD to SQL",
   "description": "Convert Mermaid ERD markup language to SQL DDL",
   "icon": "icon.png",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "publisher": "erralb",
   "repository": "https://github.com/erralb/mermaid-js-erd-to-sql",
   "engines": {
@@ -37,6 +37,10 @@
       {
         "command": "mermaid-js-erd-to-sql.mermaidERDSQLite",
         "title": "Mermaid ERD to SQLite"
+      },
+      {
+        "command": "mermaid-js-erd-to-sql.SQLToMermaid",
+        "title": "SQL to Mermaid ERD"
       }
     ]
   },
@@ -54,7 +58,7 @@
   },
   "devDependencies": {
     "@types/mocha": "^10.0.6",
-    "@types/node": "18.x",
+    "@types/node": "^18.19.34",
     "@types/vscode": "^1.89.0",
     "@typescript-eslint/eslint-plugin": "^7.7.1",
     "@typescript-eslint/parser": "^7.7.1",

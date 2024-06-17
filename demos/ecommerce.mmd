@@ -1,0 +1,75 @@
+```mermaid
+erDiagram
+
+    Customer {
+        int customerId PK
+        varchar(255) name
+        varchar(255) email
+        varchar(255) address
+        varchar(255) phone
+    }
+
+    Orders {
+        int orderId PK
+        date orderDate
+        varchar(255) status
+    }
+
+    Product {
+        int productId PK
+        varchar(255) productName
+        varchar(255) description
+        double price
+        int stock
+    }
+
+    OrderDetail {
+        int orderDetailId PK
+        int quantity
+        double unitPrice
+    }
+
+    Category {
+        int categoryId PK
+        varchar(255) categoryName
+    }
+
+    Review {
+        int reviewId PK
+        int rating
+        varchar(255) comment
+    }
+
+    Supplier {
+        int supplierId PK
+        varchar(255) supplierName
+        varchar(255) contact
+        varchar(255) phone
+        varchar(255) address
+    }
+
+    SupplierProduct {
+        int supplierId PK, FK
+        int productId PK, FK
+        double unitPrice
+    }
+
+    Employee {
+        int employeeId PK
+        varchar(255) name
+        varchar(255) surname
+        varchar(255) email
+        varchar(255) position
+        date hireDate
+    }
+
+    Orders }o--|| Customer : "Orders_Customer"
+    OrderDetail }o--|| Orders : "OrderDetail_Orders"
+    OrderDetail }o--|| Product : "OrderDetail_Product"
+    Review }o--|| Customer : "Review_Customer"
+    Review }o--|| Product : "Review_Product"
+    SupplierProduct }o--|| Supplier : "SupplierProduct_Supplier"
+    SupplierProduct }o--|| Product : "SupplierProduct_Product"
+    Category }o--o{ Product : "Category_Product"
+    Employee }o--o{ Orders : "Employee_Orders"
+```
