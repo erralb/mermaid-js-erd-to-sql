@@ -48,14 +48,14 @@ export function activate(context: vscode.ExtensionContext) {
 	});
 	context.subscriptions.push(disposable4);
 
-	//Convert Mermaid JS ERD to SQLite SQL
-	let disposable5 = vscode.commands.registerCommand('mermaid-js-erd-to-sql.SQLToMermaid', () => {
-		const { outputFilename, sqlContent } = getSQLFileContent();
-		if(outputFilename === '' || sqlContent === '') {return;}
-		const mermaidJs = convert.parseSQL(sqlContent);
-		writeGeneratedFile(outputFilename, mermaidJs);
-	});
-	context.subscriptions.push(disposable5);
+	// //Convert Mermaid JS ERD to SQLite SQL
+	// let disposable5 = vscode.commands.registerCommand('mermaid-js-erd-to-sql.SQLToMermaid', () => {
+	// 	const { outputFilename, sqlContent } = getSQLFileContent();
+	// 	if(outputFilename === '' || sqlContent === '') {return;}
+	// 	const mermaidJs = convert.SQLToMermaid.parseSQL(sqlContent);
+	// 	writeGeneratedFile(outputFilename, mermaidJs);
+	// });
+	// context.subscriptions.push(disposable5);
 
 	/**
 	 * @todo Implement Oracle SQL generation
