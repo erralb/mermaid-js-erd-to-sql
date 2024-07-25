@@ -90,25 +90,37 @@ const parseMermaidERD = (content: string): { schema: string, entities: Entity[];
         switch (rel.cardinality) {
             case '|o--||':
             case '||--o{':
+            case '|o..||':
+            case '||..o{':
                 oneToManyRelationshipSQL(entity1, entity2, false);
                 break;
             case '||--||':
             case '||--|{':
+            case '||..||':
+            case '||..|{':
                 oneToManyRelationshipSQL(entity1, entity2);
                 break;
             //reversed case for reversed cardinality
             case '||--o|':
             case '}o--||':
+            case '||..o|':
+            case '}o..||':
                 oneToManyRelationshipSQL(entity2, entity1, false);
                 break;
             case '||--||':
             case '}|--||':
+            case '||..||':
+            case '}|..||':
                 oneToManyRelationshipSQL(entity2, entity1);
                 break;
             case '}|--o{':
             case '}o--|{':
             case '}|--|{':
             case '}o--o{':
+            case '}|..o{':
+            case '}o..|{':
+            case '}|..|{':
+            case '}o..o{':
 
                 //create entity for join table
                 const entity: Entity = {
