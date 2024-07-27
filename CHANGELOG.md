@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.3] - 2024-07-27
+
+### Fixed
+
+- Relationships without table description not generated correctly
+
 ## [1.1.2] - 2024-07-25
 
 ### Fixed

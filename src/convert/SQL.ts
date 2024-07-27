@@ -44,7 +44,7 @@ class MermaidERDSQL {
         let pks = '    PRIMARY KEY (';
         let pkCount = 0;
         let fks: { [key: string]: string[] } = {};
-        sql += `CREATE TABLE ${entity.name} (\n`;
+        sql += `CREATE TABLE ${entity.name} ( \n`;
         entity.attributes.forEach(attr => {
             sql += `    ${attr.name} ${this.convertMermaidDataTypeToSQL(attr.type)},\n`;
             if (attr.pk) { pks += `${attr.name},`; pkCount++; }
