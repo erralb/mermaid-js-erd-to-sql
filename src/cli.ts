@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import * as convert from './convert/index';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
